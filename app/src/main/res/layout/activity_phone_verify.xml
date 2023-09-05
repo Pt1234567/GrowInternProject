@@ -48,10 +48,10 @@
         android:id="@+id/phoneNo"
         android:layout_width="304dp"
         android:layout_height="58dp"
-        android:layout_marginTop="5dp"
-        android:hint="Enter Phone Number"
-        android:inputType="phone"
+        android:layout_marginTop="4dp"
+        android:hint="6306026432"
         android:textAlignment="center"
+        android:inputType="phone"
         android:padding="10dp"
         android:textColor="@color/black"
         android:textSize="20dp"
@@ -73,6 +73,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNo"
         app:layout_constraintVertical_bias="0.0" />
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
