@@ -66,7 +66,7 @@ public class OtpActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                             if(task.isSuccessful()){
-                                startActivity(new Intent(OtpActivity.this,MainActivity.class));
+                                startActivity(new Intent(OtpActivity.this,ProfileActivity.class));
                                 finish();
                             }else{
                                 Toast.makeText(OtpActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
