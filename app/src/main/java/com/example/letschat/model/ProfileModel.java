@@ -1,4 +1,4 @@
-package com.example.letschat;
+package com.example.letschat.model;
 
 public class ProfileModel {
     private String name;
