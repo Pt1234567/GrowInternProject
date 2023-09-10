@@ -16,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class MessageAdapter extends RecyclerView.Adapter
 {
@@ -28,8 +29,8 @@ public class MessageAdapter extends RecyclerView.Adapter
     }
 
     ArrayList<Message> msgAdapterArray;
-   int ITEM_SEND=1;
-   int ITEM_RECEIVE=2;
+ public final static   int ITEM_SEND=1;
+   public final static int ITEM_RECEIVE=2;
 
     @NonNull
     @Override
@@ -63,7 +64,7 @@ public class MessageAdapter extends RecyclerView.Adapter
     @Override
     public int getItemViewType(int position) {
         Message msgModel=msgAdapterArray.get(position);
-        if(FirebaseAuth.getInstance().getCurrentUser().getUid().equals(msgModel.getSenderId())) {
+        if(Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid().equals(msgModel.getSenderId())) {
             return ITEM_SEND;
         }else {
             return ITEM_RECEIVE;
@@ -73,7 +74,7 @@ public class MessageAdapter extends RecyclerView.Adapter
 
 
 
-    class senderViewHolder extends RecyclerView.ViewHolder {
+    static class senderViewHolder extends RecyclerView.ViewHolder {
         TextView send_Msg;
         public senderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -81,8 +82,9 @@ public class MessageAdapter extends RecyclerView.Adapter
         }
     }
 
-    class receiverViewHolder extends RecyclerView.ViewHolder {
+    static class receiverViewHolder extends RecyclerView.ViewHolder {
         TextView receive_Msg;
+
         public receiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receive_Msg=itemView.findViewById(R.id.receive__msg);

@@ -10,8 +10,11 @@ import com.example.letschat.adapter.recyclerAdapter;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 
 import com.example.letschat.model.ProfileModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -19,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.ktx.Firebase;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -45,9 +49,13 @@ ArrayList<ProfileModel> profileModelArrayList;
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                profileModelArrayList.clear();
                 for(DataSnapshot dataSnapshot:snapshot.getChildren()){
                       ProfileModel profile=dataSnapshot.getValue(ProfileModel.class);
-                      profileModelArrayList.add(profile);
+                    if(!FirebaseAuth.getInstance().getCurrentUser().getUid().equals(profile.getUid())){
+                        profileModelArrayList.add(profile);
+                    }
+
                 }
                 adapter.notifyDataSetChanged();
             }
@@ -63,6 +71,30 @@ ArrayList<ProfileModel> profileModelArrayList;
         adapter=new recyclerAdapter(MainActivity.this,profileModelArrayList);
         recyclerView.setAdapter(adapter);
 
-
+getFCMToken();
     }
+
+    private void getFCMToken() {
+        FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+            @Override
+            public void onComplete(@NonNull Task<String> task) {
+               if(task.isSuccessful()){
+                   String token=task.getResult();
+               Log.e("GET_TOKEN",token);
+                FirebaseDatabase.getInstance().getReference("Profile").child(FirebaseAuth.getInstance().getUid()).child("fcmToken").setValue(token).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.e("UPDATE_TOKEN", "Token updated successfully");
+                        } else {
+                            Log.e("UPDATE_TOKEN", "Failed to update token");
+                        }
+                    }
+                });
+               }
+            }
+        });
+    }
+
+
 }

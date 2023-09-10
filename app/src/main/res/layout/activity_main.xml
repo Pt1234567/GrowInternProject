@@ -5,20 +5,34 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@drawable/main_top_2">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="CHATS"
-        android:textSize="40dp"
-        android:layout_marginTop="18dp"
         android:layout_marginLeft="18dp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp"
-        android:id="@+id/User_recycler"/>
+        android:layout_marginTop="18dp"
+        android:text="CHATS"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        android:textStyle="bold" />
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/main_top_bar"
+    android:padding="10dp"
+    android:layout_marginTop="18dp">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="12dp"
+            android:id="@+id/User_recycler"/>
+
+</FrameLayout>
+
+
+
 
 </LinearLayout>

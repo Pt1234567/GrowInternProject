@@ -9,7 +9,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="?attr/actionBarSize"
-    android:background="#3FBA45"
+    android:background="@drawable/main_21"
     android:id="@+id/toolbar"
     android:theme="?attr/actionBarTheme">
     <LinearLayout
@@ -51,49 +51,46 @@
                 android:layout_marginLeft="2dp"
                 android:id="@+id/status"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:visibility="invisible"
-                android:text="Online"
-                android:textStyle="bold"
+                android:textSize="15dp"
+                android:visibility="visible"
                 android:textColor="@color/white"/>
         </LinearLayout>
 
     </LinearLayout>
 </androidx.appcompat.widget.Toolbar>
-    <LinearLayout
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/msgAdapter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_above="@id/linear2"
         android:layout_below="@id/toolbar"
-        android:id="@+id/linear">
+        android:padding="5dp"
+        android:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/msgAdapter"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="visible" />
 
-    </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/linear2"
-        android:layout_above="@id/linear"
-        android:background="@drawable/bottom_shape"
+        android:layout_above="@+id/toolbar"
         android:weightSum="2"
         android:orientation="horizontal"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        tools:ignore="UnknownId">
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:cardElevation="10dp"
+            app:cardElevation="12dp"
             android:layout_weight="2"
             android:padding="10dp"
+            android:layout_gravity="center_vertical"
             android:layout_marginStart="5dp"
+            android:layout_marginTop="8dp"
             android:layout_marginEnd="5dp"
             android:layout_marginBottom="8dp"
-            app:cardCornerRadius="15dp"
+            app:cardCornerRadius="18dp"
             app:cardUseCompatPadding="true">
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,7 +106,7 @@
 
                       <EditText
                           android:id="@+id/messageBox"
-                          android:layout_width="match_parent"
+                          android:layout_width="199dp"
                           android:layout_height="wrap_content"
                           android:layout_gravity="center"
                           android:background="@android:color/transparent"
@@ -130,14 +127,7 @@
                     android:id="@+id/attachment"
                     android:src="@drawable/attachments"/>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:id="@+id/camera"
-                    android:layout_height="match_parent"
-                    app:tint="#373737"
-                    android:padding="9dp"
-                    android:layout_weight="3"
-                    android:src="@drawable/baseline_photo_camera_24"/>
+
 
             </LinearLayout>
 
@@ -145,13 +135,15 @@
 
         <ImageView
             android:id="@+id/sendImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="#FF3FBA45"
-            android:padding="10dp"
-            android:layout_marginEnd="9dp"
-            android:src="@drawable/send_1"/>
+            android:layout_width="55dp"
+            android:layout_height="55dp"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:layout_marginEnd="10dp"
+            android:background="@drawable/send_shape"
+            android:padding="15dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:src="@drawable/send_1" />
 
     </LinearLayout>
 

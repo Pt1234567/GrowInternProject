@@ -19,6 +19,8 @@ import com.example.letschat.MainActivity;
 import com.example.letschat.ProfileActivity;
 import com.example.letschat.R;
 import com.example.letschat.model.ProfileModel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.ktx.Firebase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -48,6 +50,8 @@ public recyclerAdapter(){
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         ProfileModel profileModel=profile_list.get(position);
+
+
         holder.userName.setText(profileModel.getName());
         Picasso.get().load(profileModel.getImgUri()).into(holder.User_image);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -58,6 +62,7 @@ public recyclerAdapter(){
                 i.putExtra("name",profileModel.getName());
                 i.putExtra("image",profileModel.getImgUri());
                 i.putExtra("uid",profileModel.getUid());
+                i.putExtra("fcm",profileModel.getFcmToken());
                 context.startActivity(i);
             }
         });

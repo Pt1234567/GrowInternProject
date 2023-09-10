@@ -5,7 +5,7 @@
             <corners android:topLeftRadius="100dp"
                 android:bottomLeftRadius="100dp"
                 android:topRightRadius="90dp"/>
-            <solid android:color="#92FF9D"/>
+            <solid android:color="#CECECE"/>
         </shape>
     </item>
 </layer-list>

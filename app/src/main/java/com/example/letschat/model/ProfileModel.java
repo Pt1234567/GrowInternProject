@@ -1,11 +1,24 @@
 package com.example.letschat.model;
 
+
+
 public class ProfileModel {
     private String name;
 
     private String phoneNum;
     private String uid;
     private  String imgUri;
+
+
+    public String getFcmToken() {
+        return fcmToken;
+    }
+
+    public void setFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
+    }
+
+    private String fcmToken;
     public ProfileModel(){
 
 }
