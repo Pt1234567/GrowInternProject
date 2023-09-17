@@ -1,4 +1,4 @@
-package com.example.letschat;
+package com.example.letschat.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.letschat.R;
 import com.example.letschat.adapter.MessageAdapter;
 import com.example.letschat.model.Message;
 import com.example.letschat.model.ProfileModel;
@@ -25,8 +26,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONObject;
@@ -45,36 +44,38 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ChatActivity extends AppCompatActivity {
-CircleImageView Toolbar_img;
-TextView Toolbar_name,Status;
-EditText messageBox;
-ImageView sendButton;
-String SenderID;
-FirebaseAuth firebaseAuth;
-ImageView back_btn;
-FirebaseDatabase database;
-String senderRoom,receiverRoom;
-String receiverId;
-RecyclerView msgAdpter;
-ArrayList<Message> messageArrayList;
-MessageAdapter adapter;
-String fcmToken;
-TextView time_send,time_receive;
+    CircleImageView Toolbar_img;
+    TextView Toolbar_name, Status;
+    EditText messageBox;
+    ImageView sendButton;
+    String SenderID;
+    FirebaseAuth firebaseAuth;
+    ImageView back_btn;
+    FirebaseDatabase database;
+    String senderRoom, receiverRoom;
+    String receiverId;
+    RecyclerView msgAdpter;
+    ArrayList<Message> messageArrayList;
+    MessageAdapter adapter;
+    String fcmToken;
+    TextView time_send, time_receive;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-        back_btn=findViewById(R.id.back);
-        Toolbar_img=findViewById(R.id.chat_user_img);
-        Toolbar_name=findViewById(R.id.chat_username);
-        messageBox=findViewById(R.id.messageBox);
-        sendButton=findViewById(R.id.sendImg);
-        firebaseAuth=FirebaseAuth.getInstance();
-        Status=findViewById(R.id.status);
-        time_send=findViewById(R.id.send_time);
-        time_receive=findViewById(R.id.recieve_time);
+        back_btn = findViewById(R.id.back);
+
+        Toolbar_img = findViewById(R.id.chat_user_img);
+        Toolbar_name = findViewById(R.id.chat_username);
+        messageBox = findViewById(R.id.messageBox);
+        sendButton = findViewById(R.id.sendImg);
+        firebaseAuth = FirebaseAuth.getInstance();
+        Status = findViewById(R.id.status);
+        time_send = findViewById(R.id.send_time);
+        time_receive = findViewById(R.id.recieve_time);
 
         firebaseAuth = FirebaseAuth.getInstance();
         if (firebaseAuth.getCurrentUser() == null) {
@@ -89,39 +90,31 @@ TextView time_send,time_receive;
         back_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ChatActivity.this,MainActivity.class));
+                startActivity(new Intent(ChatActivity.this, MainActivity.class));
                 finish();
             }
         });
-        database=FirebaseDatabase.getInstance();
+        database = FirebaseDatabase.getInstance();
 
 
+        Intent i = getIntent();
+        String name = i.getStringExtra("name");
+        String uri = i.getStringExtra("image");
+        receiverId = i.getStringExtra("uid");
+        fcmToken = i.getStringExtra("fcm");
+
+        messageArrayList = new ArrayList<>();
+        SenderID = firebaseAuth.getUid();
+
+        senderRoom = SenderID + receiverId;
+        receiverRoom = receiverId + SenderID;
 
 
-
-        Intent i=getIntent();
-        String name=i.getStringExtra("name");
-        String uri=i.getStringExtra("image");
-        receiverId=i.getStringExtra("uid");
-         fcmToken=i.getStringExtra("fcm");
-
-        messageArrayList=new ArrayList<>();
-        SenderID=firebaseAuth.getUid();
-
-        senderRoom=SenderID+receiverId;
-        receiverRoom=receiverId+SenderID;
-
-
-
-
-
-
-
-        msgAdpter=findViewById(R.id.msgAdapter);
-        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(ChatActivity.this);
+        msgAdpter = findViewById(R.id.msgAdapter);
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(ChatActivity.this);
         linearLayoutManager.setStackFromEnd(true);
         msgAdpter.setLayoutManager(linearLayoutManager);
-        adapter=new MessageAdapter(ChatActivity.this,messageArrayList);
+        adapter = new MessageAdapter(ChatActivity.this, messageArrayList);
         msgAdpter.setAdapter(adapter);
 
         Toolbar_name.setText(name);
@@ -137,14 +130,14 @@ TextView time_send,time_receive;
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String msg=messageBox.getText().toString();
+                String msg = messageBox.getText().toString();
 
                 messageBox.setText("");
                 sendNotifications(msg);
-                Date date=new Date();
+                Date date = new Date();
 
-                Message messagess=new Message(msg,SenderID, date.getTime());
-                database=FirebaseDatabase.getInstance();
+                Message messagess = new Message(msg, SenderID, date.getTime());
+                database = FirebaseDatabase.getInstance();
                 database.getReference().child("chats").child(senderRoom).child("messages").push()
                         .setValue(messagess).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
@@ -154,7 +147,7 @@ TextView time_send,time_receive;
                                         .push().setValue(messagess).addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
                                             public void onComplete(@NonNull Task<Void> task) {
-                                  //time_receive.setText(String.valueOf(date.getTime()));
+                                                //time_receive.setText(String.valueOf(date.getTime()));
                                             }
                                         });
                             }
@@ -164,14 +157,14 @@ TextView time_send,time_receive;
 
 
 // DatabaseReference chatReference=database.getReference().child("Profile").child(senderRoom).child("messages"); this is wrong we created child("Profile") necuse of whichwe were not able to see chat on ui
-        DatabaseReference chatReference=database.getReference().child("chats").child(senderRoom).child("messages");
+        DatabaseReference chatReference = database.getReference().child("chats").child(senderRoom).child("messages");
         //Add message in the arrayList
         chatReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 messageArrayList.clear();
-                for(DataSnapshot dataSnapshot:snapshot.getChildren()){
-                    Message msgModel=dataSnapshot.getValue(Message.class);
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                    Message msgModel = dataSnapshot.getValue(Message.class);
                     messageArrayList.add(msgModel);
 
                 }
@@ -192,46 +185,47 @@ TextView time_send,time_receive;
 
     private void sendNotifications(String msg) {
         Log.d("NOTIFICATION_GET", "Sending notification...");
-         FirebaseDatabase.getInstance().getReference("Profile").child(FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
-             @Override
-             public void onComplete(@NonNull Task<DataSnapshot> task) {
-          if(task.isSuccessful()){
-              ProfileModel currProfile=task.getResult().getValue(ProfileModel.class);
-              try {
-                        JSONObject jsonObject=new JSONObject();
-                        JSONObject notificationObj=new JSONObject();
+        FirebaseDatabase.getInstance().getReference("Profile").child(FirebaseAuth.getInstance().getUid()).get().addOnCompleteListener(new OnCompleteListener<DataSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<DataSnapshot> task) {
+                if (task.isSuccessful()) {
+                    ProfileModel currProfile = task.getResult().getValue(ProfileModel.class);
+                    try {
+                        JSONObject jsonObject = new JSONObject();
+                        JSONObject notificationObj = new JSONObject();
 
-                        notificationObj.put("title",currProfile.getName());
-                        notificationObj.put("body",msg);
+                        notificationObj.put("title", currProfile.getName());
+                        notificationObj.put("body", msg);
 
-                        JSONObject dataObj=new JSONObject();
-                        dataObj.put("uid",currProfile.getUid());
+                        JSONObject dataObj = new JSONObject();
+                        dataObj.put("uid", currProfile.getUid());
 
-                        jsonObject.put("notification",notificationObj);
-                        jsonObject.put("data",dataObj);
-                        jsonObject.put("to",fcmToken);
+                        jsonObject.put("notification", notificationObj);
+                        jsonObject.put("data", dataObj);
+                        jsonObject.put("to", fcmToken);
 
                         callApi(jsonObject);
 
-              }catch (Exception e){
+                    } catch (Exception e) {
 
-              }
-          }
-             }
-         });
+                    }
+                }
+            }
+        });
     }
-    void callApi(JSONObject jsonObject){
+
+    void callApi(JSONObject jsonObject) {
         Log.d("Notification", "Calling API...");
         ///**IMPORTANT**///
 
-        MediaType JSON=MediaType.get("application/json; charset=utf-8");
-        OkHttpClient client=new OkHttpClient();
-        String url="https://fcm.googleapis.com/fcm/send";
-        RequestBody body=RequestBody.create(jsonObject.toString(),JSON);
-        Request request=new Request.Builder()
+        MediaType JSON = MediaType.get("application/json; charset=utf-8");
+        OkHttpClient client = new OkHttpClient();
+        String url = "https://fcm.googleapis.com/fcm/send";
+        RequestBody body = RequestBody.create(jsonObject.toString(), JSON);
+        Request request = new Request.Builder()
                 .url(url)
                 .post(body)
-                .header("Authorization","Bearer AAAAylJJp4c:APA91bExKBYgxBOzYbI1Jyg72ew6KlSq8sLF29P8h4hjdq1St2-uiaDz8MskIB4KEM2-HL7X-tkXNVq4fnValb7pmQOgAFmh3YQkMeFK5woRIGRVDwV69Lp8AJjs8k4PZjOUm4-5N08S")
+                .header("Authorization", "Bearer AAAAylJJp4c:APA91bExKBYgxBOzYbI1Jyg72ew6KlSq8sLF29P8h4hjdq1St2-uiaDz8MskIB4KEM2-HL7X-tkXNVq4fnValb7pmQOgAFmh3YQkMeFK5woRIGRVDwV69Lp8AJjs8k4PZjOUm4-5N08S")
                 .build();
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -247,7 +241,7 @@ TextView time_send,time_receive;
     }
 
     void setStatus() {
-        if (SenderID != null && receiverId!=null) {
+        if (SenderID != null && receiverId != null) {
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Profile");
             DatabaseReference currUserRef = userRef.child(SenderID);
 
@@ -277,7 +271,5 @@ TextView time_send,time_receive;
             });
         }
     }
-
-
-
 }
+

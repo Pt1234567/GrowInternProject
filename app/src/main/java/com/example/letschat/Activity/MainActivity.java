@@ -1,4 +1,4 @@
-package com.example.letschat;
+package com.example.letschat.Activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -6,10 +6,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+
+import com.example.letschat.R;
 import com.example.letschat.adapter.recyclerAdapter;
-import android.content.Intent;
+
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 
 import com.example.letschat.model.ProfileModel;
@@ -21,7 +22,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;

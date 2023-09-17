@@ -1,8 +1,10 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+
     <style name="Base.Theme.LetsChat" parent="Theme.Material3.Light.NoActionBar">
         <!-- Customize your light theme here. -->
        <item name="android:statusBarColor">#80FFFFFF</item>
+        <item name="android:windowDisablePreview">true</item>
     </style>
 
     <style name="Theme.LetsChat" parent="Base.Theme.LetsChat" />

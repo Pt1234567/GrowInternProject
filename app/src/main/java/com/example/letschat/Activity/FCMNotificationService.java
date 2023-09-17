@@ -1,4 +1,4 @@
-package com.example.letschat;
+package com.example.letschat.Activity;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 

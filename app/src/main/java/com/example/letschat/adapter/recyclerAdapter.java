@@ -6,21 +6,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.letschat.ChatActivity;
-import com.example.letschat.MainActivity;
-import com.example.letschat.ProfileActivity;
+import com.example.letschat.Activity.ChatActivity;
 import com.example.letschat.R;
 import com.example.letschat.model.ProfileModel;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.ktx.Firebase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ChatActivity">
+    tools:context=".Activity.ChatActivity">
 <androidx.appcompat.widget.Toolbar
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -118,14 +118,14 @@
                           tools:ignore="TouchTargetSizeCheck" />
                   </LinearLayout>
 
-                <ImageView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    app:tint="#373737"
-                    android:padding="9dp"
-                    android:layout_weight="3"
-                    android:id="@+id/attachment"
-                    android:src="@drawable/attachments"/>
+<!--                <ImageView-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    app:tint="#373737"-->
+<!--                    android:padding="9dp"-->
+<!--                    android:layout_weight="3"-->
+<!--                    android:id="@+id/attachment"-->
+<!--                    android:src="@drawable/attachments"/>-->
 
 
 
